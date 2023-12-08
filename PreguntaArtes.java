@@ -2,12 +2,20 @@ import java.util.List;
 
 public class PreguntaArtes extends Pregunta{
 
-    private List<String> opcCorrectas;
+    private List<String> listaOpciones;
+    private String opCorrecta;
     private List<String> lista3Opc;
-    public PreguntaArtes(String texto, int puntuacion, List<String> opcCorrectas, List<String> lista3Opc) {
+
+
+    public PreguntaArtes(String texto, int puntuacion) {
         super(texto, puntuacion);
-        this.opcCorrectas=opcCorrectas;
+    }
+
+    public PreguntaArtes(String texto, int puntuacion, String opCorrecta,  List<String> opciones, List<String> lista3Opc) {
+        super(texto, puntuacion);
+        this.listaOpciones=opciones;
         this.lista3Opc=lista3Opc;
+        this.opCorrecta = opCorrecta;
     }
 
     @Override
@@ -16,11 +24,26 @@ public class PreguntaArtes extends Pregunta{
         return puntuacionBase * 10;
     }
 
-    public List<String> imprimeRespuestaNombre(){
+    @Override
+    public void mostrarRespuesta() {
+        System.out.println("Opciones: ");
+
+        for ( int i=0 ; i < listaOpciones.size() ; i++ )
+            System.out.println(listaOpciones.get(i));
+    
+    }
+
+    public List<String> getRespuestaNombre(){
         return lista3Opc;
     }
 
-    public List<String> imprimeOpcCorrecta(){
-        return opcCorrectas;
+    public List<String> getOpciones(){
+        return listaOpciones;
+    }
+
+    public String getCorrecta(){
+
+        return opCorrecta;
+
     }
 }
