@@ -1,19 +1,30 @@
 import java.util.List;
 
-public class PreguntaDeporteFutbol extends Pregunta{
-    private List<String> listaNombre;
-    private List<Integer> listaNumero;
+public class PreguntaDeporteFutbol extends PreguntaDeporte{
+    private String listaNombre;
+    private int listaNumero;
 
-    public PreguntaDeporteFutbol(String texto , int puntuacion, List<String> listaNombre, List<Integer> listaNumero) {
+    public PreguntaDeporteFutbol(String texto , int puntuacion ) {
+        super(texto, puntuacion);
+    }
+
+    public PreguntaDeporteFutbol(String texto , int puntuacion, String listaNombre, int listaNumero) {
         super(texto, puntuacion);
         this.listaNombre=listaNombre;
         this.listaNumero=listaNumero;
     }
 
-    public List<String> getListaNombre() {
+    public String getListaNombre() {
         return listaNombre;
     }
 
+    @Override
+    public void mostrarRespuesta() {
+
+        System.out.println(listaNombre);
+        System.out.println(listaNumero);
+    
+    }
 
     @Override
     public int getPuntuacion() {
@@ -21,11 +32,7 @@ public class PreguntaDeporteFutbol extends Pregunta{
         return puntuacionBase + 1;
     }
 
-    public List<String> imprimeRespuestaNombre(){
-        return listaNombre;
-    }
-
-    public List<Integer> imprimeRespuestaNumero(){
+    public int getRespuestaNumero(){
         return listaNumero;
     }
 
