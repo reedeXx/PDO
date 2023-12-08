@@ -77,9 +77,8 @@ public class Panel extends Component {
 
         if (opcion == JOptionPane.YES_OPTION) {
             // Comenzar un nuevo juego
-            // Puedes agregar aquí la lógica para reiniciar el juego
+
         } else {
-            // Salir
             System.exit(0);
         }
 
