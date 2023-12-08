@@ -1,0 +1,258 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class Panel extends Component {
+    private JFrame frame;
+    private JLabel labelPregunta;
+    private JRadioButton opcion1, opcion2, opcion3, opcion4, opcion5, opcionVerdadero, opcionFalso;
+    private JButton botonSiguiente;
+    private int puntuacion = 10; //QUITARLO DESPUESSS
+    private ArrayList<Integer> mejoresPuntuaciones = new ArrayList<>();
+
+
+    private ButtonGroup group;
+    private ActionListener botonSiguienteListener;
+
+    public void crearVentana(String categoria, int contPregunta) {
+        frame = new JFrame();
+        frame.setTitle("Preguntas");
+        frame.setSize(1000, 800);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        group = new ButtonGroup();
+        botonSiguienteListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verificarRespuesta();
+            }
+        };
+
+        group = new ButtonGroup();
+
+        /*if("Artes".equals(categoria)) {
+            if (contPregunta <= 3) {
+                cargarPreguntaArtesAntes3Pregunta();
+            } else {
+                preguntaArteDespues3Pregunta();
+            }
+        } else if("Deporte".equals(categoria)) {
+            cargarPreguntaDeporteSkiNatacion();
+        } else if("Futbol".equals(categoria)){
+            if (contPregunta <= 3) {
+                preguntaDeporteFutbolJugaorYNumero(); //se cambia en el mismo las opciones
+            } else {
+                preguntaDeporteFutbolJugaorYNumero();
+            }
+            preguntaDeporteFutbolJugaorYNumero();
+        }else if("Ciencias".equals(categoria)){
+            preguntaCiencia();
+        }*/
+
+        preguntarDatosJugador();
+
+        frame.setVisible(true);
+
+        SwingUtilities.updateComponentTreeUI(frame);
+    }
+
+    private void preguntarDatosJugador() {
+        String nombreCompleto = JOptionPane.showInputDialog("Ingrese su nombre completo:");
+
+        mostrarTop3();
+
+        int opcion = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea comenzar un nuevo juego o salir?",
+                "Opciones",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new String[]{"Nuevo Juego", "Salir"},
+                "Nuevo Juego");
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Comenzar un nuevo juego
+            // Puedes agregar aquí la lógica para reiniciar el juego
+        } else {
+            // Salir
+            System.exit(0);
+        }
+
+    }
+
+
+    private void mostrarTop3() {
+
+        mejoresPuntuaciones = new ArrayList<>();
+
+        // Agregar manualmente puntuaciones
+        mejoresPuntuaciones.add(10);
+        mejoresPuntuaciones.add(8);
+        mejoresPuntuaciones.add(12);
+
+        StringBuilder mensaje = new StringBuilder("TOP 3 Puntuaciones:\n");
+        for (int i = 0; i < Math.min(3, mejoresPuntuaciones.size()); i++) {
+            mensaje.append(i + 1).append(". ")
+                    .append("Puntuación: ").append(mejoresPuntuaciones.get(i)).append(" puntos\n");
+        }
+
+        JOptionPane.showMessageDialog(null, mensaje.toString(), "TOP 3", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void cargarPreguntaArtesAntes3Pregunta() {
+        labelPregunta = new JLabel("¿Cuál es la capital de Francia?");
+        opcion1 = new JRadioButton("Roma");
+        opcion2 = new JRadioButton("París");
+        opcion3 = new JRadioButton("Londres");
+
+        opcion2.setActionCommand("correcta");
+
+        group.add(opcion1);
+        group.add(opcion2);
+        group.add(opcion3);
+
+        botonSiguiente = new JButton("Siguiente");
+        botonSiguiente.addActionListener(botonSiguienteListener);
+
+        frame.setLayout(new GridLayout(5, 1));
+        frame.add(labelPregunta);
+        frame.add(opcion1);
+        frame.add(opcion2);
+        frame.add(opcion3);
+        frame.add(botonSiguiente);
+    }
+
+    private void verificarRespuesta() {
+        if (group.getSelection() != null && group.getSelection().getActionCommand() != null && group.getSelection().getActionCommand().equals("correcta")) {
+
+            JOptionPane.showMessageDialog(frame, "¡Respuesta correcta!, Su puntuacion es: " + puntuacion + " puntos");
+            puntuacion += 10;
+        } else {
+            JOptionPane.showMessageDialog(frame, "Respuesta incorrecta! Su puntuacion es: " + puntuacion + " puntos");
+        }
+    }
+
+    public void cargarPreguntaDeporteSkiNatacion() {
+        labelPregunta = new JLabel("¿El esquí acuático es un deporte acuático?");
+        opcionVerdadero = new JRadioButton("Verdadero");
+        opcionFalso = new JRadioButton("Falso");
+
+        opcionVerdadero.setActionCommand("correcta");
+
+        group.add(opcionVerdadero);
+        group.add(opcionFalso);
+
+        botonSiguiente = new JButton("Siguiente");
+        botonSiguiente.addActionListener(botonSiguienteListener);
+
+        frame.setLayout(new GridLayout(5, 1));
+        frame.add(labelPregunta);
+        frame.add(opcionVerdadero);
+        frame.add(opcionFalso);
+        frame.add(botonSiguiente);
+    }
+
+ //cambiar el numero de opciones segun el q tegamos
+    public void preguntaDeporteFutbolJugaorYNumero() {
+        labelPregunta = new JLabel("¿Numero camiseta Ronaldo?");
+
+        opcion1 = new JRadioButton("1");
+        opcion2 = new JRadioButton("4");
+        opcion3 = new JRadioButton("7");
+        opcion4 = new JRadioButton("3");
+        opcion5 = new JRadioButton("8");
+
+        opcion5.setActionCommand("correcta");
+
+        group.add(opcion1);
+        group.add(opcion2);
+        group.add(opcion3);
+        group.add(opcion4);
+        group.add(opcion5);
+
+        botonSiguiente = new JButton("Siguiente");
+        botonSiguiente.addActionListener(botonSiguienteListener);
+
+        frame.setLayout(new GridLayout(6, 1)); // Se cambió de 5 a 6 para incluir la etiqueta
+        frame.add(labelPregunta);
+        frame.add(opcion1);
+        frame.add(opcion2);
+        frame.add(opcion3);
+        frame.add(opcion4);
+        frame.add(opcion5);
+        frame.add(botonSiguiente);
+    }
+
+    //depende del numero de opciones de cada lista
+    public void preguntaCiencia(){
+        labelPregunta = new JLabel("¿quien fue nEWTON?");
+
+        opcion1 = new JRadioButton("yo");
+        opcion2 = new JRadioButton("tu");
+        opcion3 = new JRadioButton("mi abuelo");
+        opcion4 = new JRadioButton("una manzana");
+        opcion5 = new JRadioButton("s");
+
+        opcion3.setActionCommand("correcta");
+
+        group.add(opcion1);
+        group.add(opcion2);
+        group.add(opcion3);
+        group.add(opcion4);
+        group.add(opcion5);
+
+        botonSiguiente = new JButton("Siguiente");
+        botonSiguiente.addActionListener(botonSiguienteListener);
+
+        frame.setLayout(new GridLayout(6, 1));
+        frame.add(labelPregunta);
+        frame.add(opcion1);
+        frame.add(opcion2);
+        frame.add(opcion3);
+        frame.add(opcion4);
+        frame.add(opcion5);
+        frame.add(botonSiguiente);
+
+    }
+
+    public void preguntaArteDespues3Pregunta(){
+        labelPregunta = new JLabel("¿Mona lisa?");
+
+        opcion1 = new JRadioButton("mi tia");
+        opcion2 = new JRadioButton("un cuadro");
+        opcion3 = new JRadioButton("un coche");
+        opcion4 = new JRadioButton("una puerta");
+        opcion5 = new JRadioButton("s");
+
+        opcion2.setActionCommand("correcta");
+
+        group.add(opcion1);
+        group.add(opcion2);
+        group.add(opcion3);
+        group.add(opcion4);
+        group.add(opcion5);
+
+        botonSiguiente = new JButton("Siguiente");
+        botonSiguiente.addActionListener(botonSiguienteListener);
+
+        frame.setLayout(new GridLayout(6, 1));
+        frame.add(labelPregunta);
+        frame.add(opcion1);
+        frame.add(opcion2);
+        frame.add(opcion3);
+        frame.add(opcion4);
+        frame.add(opcion5);
+        frame.add(botonSiguiente);
+
+    }
+
+
+
+
+
+}
