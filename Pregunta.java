@@ -1,6 +1,6 @@
 import java.util.List;
 
-public abstract class Pregunta {
+public class Pregunta {
 
     protected String texto;
     protected int puntuacionBase;
@@ -18,6 +18,8 @@ public abstract class Pregunta {
         return puntuacionBase;
     }
 
-    public abstract void mostrarRespuesta();
+    public void mostrarRespuesta(){
+
+    }
 
 }
