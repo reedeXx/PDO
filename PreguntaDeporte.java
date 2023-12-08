@@ -10,6 +10,13 @@ public class PreguntaDeporte extends Pregunta {
 
     }
 
+    public PreguntaDeporte( String texto, int puntuacion ,boolean respuesta ) {
+    
+        super(texto, puntuacion );
+        this.verdaderoFalso = respuesta;
+
+    }
+
     public String ImprimeRespuesta(){
 
         String cadena = texto;
@@ -19,6 +26,17 @@ public class PreguntaDeporte extends Pregunta {
 
     public boolean verificarRespuesta( boolean respuesta  ) {        
         return ( respuesta == verdaderoFalso );
+    }
+
+    @Override
+    public void mostrarRespuesta() {
+
+        if ( verdaderoFalso )
+            System.out.println("Verdadero");
+        else
+            System.out.println("Falso");
+
+    
     }
 
     @Override
