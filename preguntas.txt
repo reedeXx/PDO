@@ -1,0 +1,9 @@
+::A:: ¿Quién pintó La Mona Lisa?;Leonardo da Vinci;Gongora;Picaso;Otra
+
+::C:: ¿Cuál es el símbolo químico del agua?; OpciónFácil1; OpciónFácil2; OpciónFácil3; OpciónCorrecta=RespuestaCorrecta; OpciónDifícil1; OpciónDifícil2; OpciónDifícil3; OpciónDifícil4; OpciónDifícil5
+
+::F:: ¿Quién ganó el Balón de Oro en 2020?;Lionel Messi;10
+
+::N:: ¿Hay 4 estilos de natación hay en una competición de natación?;Verdadero
+
+::S:: ¿En Corea del Sur se celebraron los Juegos Olímpicos de Invierno de 2018?;Verdadero
