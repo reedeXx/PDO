@@ -2,48 +2,29 @@ import java.util.List;
 
 public class PreguntaArtes extends Pregunta{
 
-    private List<String> listaOpciones;
-    private String opCorrecta;
-    private List<String> lista3Opc;
-
-
-    public PreguntaArtes(String texto, int puntuacion) {
-        super(texto, puntuacion);
+    public PreguntaArtes(String texto, int puntos, List<String> opc, String sol, String categoria ){
+        super(texto, puntos, opc, sol, categoria  );
     }
 
-    public PreguntaArtes(String texto, int puntuacion, String opCorrecta,  List<String> opciones, List<String> lista3Opc) {
-        super(texto, puntuacion);
-        this.listaOpciones=opciones;
-        this.lista3Opc=lista3Opc;
-        this.opCorrecta = opCorrecta;
+    public String getTexto() {
+        return super.getTexto();
     }
 
-    @Override
     public int getPuntuacion() {
-        puntuacionBase = super.getPuntuacion();
-        return puntuacionBase * 10;
+        return super.getPuntuacion();
     }
 
-    @Override
-    public void mostrarRespuesta() {
-        System.out.println("Opciones: ");
+    public String getCategoria(){return super.getCategoria();}
 
-        for ( int i=0 ; i < listaOpciones.size() ; i++ )
-            System.out.println(listaOpciones.get(i));
-    
+    public String getRespuesta(){
+        return super.getRespuesta();
     }
 
-    public List<String> getRespuestaNombre(){
-        return lista3Opc;
+    public List<String> getOpciones() {
+        return super.getOpciones();
     }
 
-    public List<String> getOpciones(){
-        return listaOpciones;
-    }
-
-    public String getCorrecta(){
-
-        return opCorrecta;
-
+    public int calcularTotalPreguntas(){
+        return opc.size();
     }
 }
