@@ -1,22 +1,33 @@
+import java.util.ArrayList;
 import java.util.List;
-public class Principal {
+import java.util.Random;
+
+public class main {
     public static void main(String[] args) {
-        /*
-        Jugador j = new Jugador("pepe");
-        System.out.println(j.toString());
-        PreguntaDeporteSki p1 = new PreguntaDeporteSki("ejemplo", 5);
-        System.out.println(p1.getPuntuacion());
-        */
-    
-        List <Pregunta> ejemplo = Fichero.cargarPreguntasDesdeArchivo("preguntas.txt");
+        String ruta = System.getProperty("user.dir");
+        List<Pregunta> preguntas = Fichero.cargarPreguntasDesdeArchivo("C:\\Users\\pauli\\OneDrive\\Escritorio\\Coimbra\\Programacion\\preguntas.txt");
+        int ronda =0;
 
-        for( int i=0 ; i<ejemplo.size() ; i++ ){
-           System.out.println(ejemplo.get(i).getTexto());
-           ejemplo.get(i).mostrarRespuesta();
+
+       /* for (String opcion : opciones) {
+            System.out.println(opcion);*/ //IMPRIMIR OPCIONES AL MEZCLAR
+        Interfaz panel=new Interfaz();
+
+            Random random = new Random();
+
+        boolean[] preguntasSeleccionadas = new boolean[preguntas.size()];
+
+
+             int indiceAleatorio = random.nextInt(preguntas.size());
+
+            if (!preguntasSeleccionadas[indiceAleatorio]) {
+
+                Pregunta pregunta = preguntas.get(indiceAleatorio);
+                preguntasSeleccionadas[indiceAleatorio] = true;
+
+
+                panel.crearVentana( pregunta);
+
         }
-        
-
-    
     }
-
-}
+        }
