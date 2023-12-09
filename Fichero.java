@@ -115,41 +115,48 @@ public class Fichero {
     }
 
     private static Pregunta parsearLineaAPregunta(String linea) {
-        String[] partesPrincipales = linea.split(";", 2);
+        String[] partes = linea.split(";");
+        if (partes.length >= 2) {
+            String texto = partes[0].trim();
+            String respuesta = partes[1].trim();
+            
+            
+            if (linea.contains("::A::")) {
+                String[] textoRespuesta = texto.split("::A::"); 
+                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partes, 1, partes.length));     
+                int inicio = Math.max(0, opciones.size() - 3);
+                int fin = opciones.size();       
+                List<String> subListaSerializable = new ArrayList<>(opciones.subList(inicio, fin));
 
-        if (partesPrincipales.length == 2) {
-            String texto = partesPrincipales[0].trim();
-            String respuesta = partesPrincipales[1].trim();
-
-            String[] partesRespuesta = respuesta.split(";");
-            if (partesRespuesta.length >= 1) {
-
-                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partesRespuesta, 0, partesRespuesta.length ));
-                if (linea.contains("::A::")) {
-                    texto = texto.replace("::A::", "");
-                    return new PreguntaArtes(texto, 5, opciones, opciones.get(0), "Artes");
-                } else if (linea.contains("::C::")) {
-                    texto = texto.replace("::C::", "");
-                    return new PreguntaCiencia(texto, 5, opciones, opciones.get(0), "Ciencia");
-                } else if (linea.contains("::F::")) {
-                    texto = texto.replace("::F::", "");
-                    return new PreguntaDeporteFutbol(texto, 5, opciones, opciones.get(0), "Futbol");
-                } else if (linea.contains("::N::")) {
-                    texto = texto.replace("::N::", "");
-                    return new PreguntaDeporteNatacion(texto, 5, opciones, opciones.get(0), "Natacion");
-                } else if (linea.contains("::S::")) {
-                    texto = texto.replace("::S::", "");
-                    return new PreguntaDeporteSki(texto, 5, opciones, opciones.get(0), "Ski");
-                } else {
-                    System.out.println("Categoría de pregunta desconocida: " + linea);
-                    return null;
-                }
+                return new PreguntaArtes(textoRespuesta[1],  5, partes[partes.length - 1] , opciones, subListaSerializable );   
+            } else if (linea.contains("::C::")) {
+                String[] textoRespuesta = texto.split("::C::");           
+                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partes, 1, partes.length));         
+                List<String> opcionesFaciles = opciones.subList(0, opciones.size() / 2);
+                List<String> opcionesDificiles = opciones.subList((opciones.size() / 2) - 1, opciones.size());
+                return new PreguntaCiencia(textoRespuesta[1], 5, opcionesFaciles, opcionesDificiles) ;
+            } else if (linea.contains("::F::")) {
+                String[] textoRespuesta = texto.split("::F::");  
+                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partes, 1, partes.length));          
+                return new PreguntaDeporteFutbol(textoRespuesta[1] , 5, partes[partes.length - 2],  Integer.parseInt(partes[partes.length - 1]));
+            } else if (linea.contains("::N::")) {
+                String[] textoRespuesta = texto.split("::N::");  
+                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partes, 1, partes.length));
+                return new PreguntaDeporteNatacion(textoRespuesta[1], 5, partes[partes.length - 1].contains("Verdadero"));
+            } else if (linea.contains("::S::")) {
+                String[] textoRespuesta = texto.split("::S::");  
+                List<String> opciones = Arrays.asList(Arrays.copyOfRange(partes, 1, partes.length));
+                return new PreguntaDeporteSki(textoRespuesta[1], 5, partes[partes.length - 1].contains("Verdadero") );              
+                
             } else {
+                
+                System.out.println("Categoría de pregunta desconocida: " + linea);
                 return null;
             }
         } else {
-          
+            
             return null;
-}
+        }
     }
+
 }
